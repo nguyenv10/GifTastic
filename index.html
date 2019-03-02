@@ -1,0 +1,89 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <title>Home</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <meta name="description" content="">
+        <script src="./javascript/jquery.min.js"></script>
+        <link rel="stylesheet" href="./assets/css/style.css"/>
+    </head>
+    <body>
+        <div class="buttons">
+        </div>
+
+        <div class="addnew">
+
+            <form id="form" action="">
+
+                <label for="">Add New</label>
+                <input type="text" name="" class="thetext">
+                <input type="submit" value="Add" class="addnewelement" >
+
+            </form>
+
+        </div>
+
+        <div class="images">
+        </div>
+    </body>
+    <script>
+        var topics = ['cats','dogs','hamster','bunny'];
+        for(x = 0; x< topics.length; x++)
+        {
+            var $input = $('<input name="category"  class="category" type="button" value="'+topics[x]+'" />');
+            $input.appendTo($(".buttons"));
+        }
+        $(".category").click(function(){
+
+
+               $(".images").empty();
+
+            var value = $(this).val();
+            var xhr = $.get('http://api.giphy.com/v1/gifs/search?q="'+value+'"&api_key=HXgIDRK75b64TkBaMKqpssl4Szmhy9a8&limit=10');
+            xhr.done(function(response) {
+                var img = response.data;
+                for (i = 0; i < img.length; i++) {
+                    var $input2 = $('<div style="float:left;min-height:300px;"><img src="'+img[i].images.original.url+'" style="width:200px;"><p>Rating :"'+img[i].rating+'"</p></div>');
+                    $('.images').append($input2);
+                } 
+            });
+        });
+
+        $("#form").submit(function(e){
+
+            e.preventDefault();
+
+            var name = $(".thetext").val();
+
+            topics.push(name);
+
+              $(".buttons").empty();
+
+            for(x = 0; x< topics.length; x++)
+            {
+                var $input = $('<input name="category"  class="category" type="button" value="'+topics[x]+'" />');
+                $input.appendTo($(".buttons"));
+            }
+
+            $(".category").click(function(){
+
+
+                 $(".images").empty();
+
+                var value = $(this).val();
+                var xhr = $.get('http://api.giphy.com/v1/gifs/search?q="'+value+'"&api_key=HXgIDRK75b64TkBaMKqpssl4Szmhy9a8&limit=10');
+                xhr.done(function(response) {
+                    var img = response.data;
+                    for (i = 0; i < img.length; i++) {
+                        var $input2 = $('<img src="'+img[i].images.original.url+'" style="width:200px;">');
+                        $('.images').append($input2);
+                    } 
+                });
+            });
+
+        });
+
+    </script>
+</html>
