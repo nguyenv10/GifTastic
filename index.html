@@ -41,7 +41,7 @@
                $(".images").empty();
 
             var value = $(this).val();
-            var xhr = $.get('http://api.giphy.com/v1/gifs/search?q="'+value+'"&api_key=HXgIDRK75b64TkBaMKqpssl4Szmhy9a8&limit=10');
+            var xhr = $.get('https://api.giphy.com/v1/gifs/search?q="'+value+'"&api_key=HXgIDRK75b64TkBaMKqpssl4Szmhy9a8&limit=10');
             xhr.done(function(response) {
                 var img = response.data;
                 for (i = 0; i < img.length; i++) {
